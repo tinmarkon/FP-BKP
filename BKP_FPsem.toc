@@ -1,9 +1,0 @@
-\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
-\defcounter {refsection}{0}\relax 
-\select@language {slovene}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {1}Uvod}{3}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2}Formulacija in lastnosti problema}{3}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{Literatura}{6}
