@@ -1,0 +1,192 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage[slovene]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{biblatex}
+\usepackage{enumerate}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath,amsthm,amssymb}
+\newtheorem{example}{Primer}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{amsfonts}
+\usepackage{eurosym}
+\usepackage{tikz}
+\usetikzlibrary{fadings,positioning,calc}
+\tikzset{
+	casual/.style={
+	rectangle,
+	draw=black, very thick,
+	text width=6.5em,
+	minimum height=2em,
+	text centered
+	}}
+\newtheorem{theorem}{Trditev}
+\newtheorem{definition}{Definicija}
+\newtheorem{corollary}{Primer}
+
+
+	\begin{document}
+		\begin{titlepage}
+			\begin{center}
+
+			\large
+			Univerza v Ljubljani\\
+				\normalsize
+				Fakulteta za matematiko in fiziko\\
+
+			\vspace{5 cm} 
+
+				\large
+				Finančni praktikum\\
+
+
+			\vspace{0.5cm}
+			\LARGE
+				\textbf{Algoritem za reševenje dvostopenjskega problema nahrbtnika z dinamičnim programiranjem}
+
+			\vspace{0.5 cm}
+
+			\large
+				Jakob Zarnik, Tin Markon \\
+
+
+			\vspace{1.5cm}
+			\normalsize
+				Mentorja: prof. dr. Sergia Cabello Justo, asist. dr. Janoš Vidali
+			\vspace{3cm}
+
+
+			\vfill
+
+				\large Ljubljana, 2020
+
+			\end{center}
+		\end{titlepage}
+
+
+\newpage
+
+\tableofcontents
+\vspace{22mm}
+
+\newpage
+		
+	\pagestyle{fancy}
+	\fancyhead{}
+	\fancyhead[R]{Dvostopenjski problem nahrbtnika}
+	\fancyfoot{}
+	\fancyfoot[R]{\thepage}
+	\fancyfoot[L]{Jakob Zarnik, Tin Markon}
+	
+	\begin{abstract}
+	
+	V nalogi bova obravnavala reševanje dvostopenjskega problema nahrbtnika z dinamičnim programiranjem. Za izdelavo algoritma bova uporabila programski jezik Python.
+	
+	\end{abstract}
+	
+	\pagebreak
+	
+	\section{Uvod}
+	
+	Dvostopenjski programi omogočajo modeliranje situacij, kjer glavni odločevalec, v nadaljevanju poimenovan investitor, optimizira svoja sredstva s tem, da neposredno upošteva odziv posrednika na njegovo odločitev o višini vložka. V primeru dvostopenjskega problema nahrbtnika (Bilevel Knapsack Problem), v nadaljevanju BKP, investitor določi prostornino nahrbtnika z namenom maksimizacije dobička, med tem ko se posrednik sooča z 0-1 problemom nahrbtnika s prostornino določeno s strani investitorja. BKP je ustrezen za modeliranje problema »ustreznega financiranja«, kjer posameznik (tj. investitor), svoja sredstva razdeli med netvegano naložbo s fiksnim donosom (npr. varčevalni račun, državna obveznica) in bolj tvegano naložbo, preko posrednika kot je banka ali bančni posrednik (broker). Ta kupi delnice ali obveznice z namenom maksimizacije svojega dobička s tem, da upošteva omejitve finančnih sredstev (prostornina nahrbtnika) investitorja in ustvari donos z ustrezno izbiro investicij. Podobno uporabo modeliranja lahko opazimo na področju upravljanja s proizvodi, kjer se podjetje odloča koliko enot izdelkov naj proda samo in koliko preko posrednika.
+	
+	BKP je mešan celoštevilski dvostopenjski problem predstavljen s strani Dempe in Richer, ki sta za rešitev predstavila breanch-and-bound okvir. V najini nalogi najprej razširiva potrebne in zadostne pogoje za obstoj optimalne rešitve. Nato predlagava enostaven in učinkovit algoritem dinamičnega programiranja za reševanje problema. V nasprotju s pristopom Dempe in Richer, kjer je beležen seznam nedominantnih rešitev, tukaj beležimo samo objektivne funkcijske vrednosti za oba, investitorja in posrednika, tekom dinamičnega procesa.
+		
+	\section{Formulacija in lastnosti problema}
+	
+	V narbtnik s prostornino oz kapaciteto $y$, ki jo določi investitor, vsakemu predmetu $j$ določimo utež oz. volumen $a_j$, zaslužek posrednika $c_j$ in zaslužek investitorja $d_j$. Ceno enote prostornine nahrbtnika označimo s $t$. Z danim $y$, posrednik izbere podmnožico predmetov, ki upošteva prostosrsko omejitev. To nam da dvostopenjski program
+	\[   
+	\text{BKP} = 
+    	\begin{cases}
+	 	\text{$\underset{y,x}{\text{Max}} f^{1}(y,x)=dx+ty$} \\
+       		\text{s.t. $\underline{b} \leq y \leq \overline{b}$} \\
+       		\text{$\underset{x}{\text{Max}} f^{2}(x)=cx$} \\
+       		\text{s.t. $ax \leq y$ and $x \in \{ 0, 1\}^n$} \\ 
+    	\end{cases}
+	\]
+
+	
+kjer so $a$, $c$ in $d$ celoštevilske vrednosti in $a$, $c$, $d$, $\underline{b}$ in $\overline{b}$ nenegativne. V najini nalogi so z
+	
+	$$ \text{S} = \{ (x, y) \in \{ 0, 1 \}^n \times \left[ \underline{b}, \overline{b} \right]: ax \leq y\} $$ 
+	
+	označene omejitve, s 
+	
+	$$ \text{P}(y) = \{ x \in \text{Arg}\max \{ cx^\prime: ax^\prime \leq y, x^\prime \in \{ 0,1\}^n \} \}$$
+	
+	označimo posrednikovo racionalno izbiro množice (za fiksen $y$) in z 
+	
+	$$ \text{IR} = \{ (x,y)  | (x,y) \in S, x \in \text{P}(y) \} $$
+	
+	induktiven del, preko katerega investitor optimizira svojo funkcijo.
+	
+	Dvostopenjski program obstaja v dveh različicah. Optimističen primer, ko je racionalna množica ni singelton (enolična), posrednik izbere tisto rešitev, ki maksimizira zaslužek vodje. Dobljena rešitev se imenuje močna rešitev. V pesimističnem primeru pa vodja predvideva, da kadar ima posrednik več enakovredni možnosti izbire množice, izbere tisto, ki minimizira vodjin zaslužek. Tako dobimo šibko rešitev.
+	
+	\begin{theorem}[Dempe in Richer]
+	Če je cena enote investicije nepozitivna, potem obstaja optimalna rešitev BKP.
+	\label{trditev1}
+	\end{theorem}
+	
+	Zapomnimo si, da če je t pozitiven, BKP lahko nima optimalne rešitve. To je prikazano v naslednjem primeru.
+	
+	\begin{corollary}
+	\normalfont
+	\[   
+	\text{BKP}_1 =
+    	\begin{cases}
+	 	\text{$\underset{y,x}{\text{Max}} f^{1}(y,x)=5x_1 + x_2 + x_3 + x_4 + y$} \\
+       		\text{s.t. $1 \leq y \leq 4$} \\
+       		\text{$\underset{x}{\text{Max}} f^{2}(x)=4x_1 + 5x_2 + 10x_3 + 15x_4$} \\
+		\text{s.t. $x_1 + 2x_2 + 3x_3 + 4x_4 \leq y $} \\
+       		\text{$x \in \{ 0, 1\}^4$} \\
+    	\end{cases}
+	\]
+	kjer je $f^{1}(y,x)$ linearna odsekoma zvezna diskontna funkcija v spremenljivki $y$, ki jo določi investitor. Za $y \in \left[1, 2\right)$ posrednik vedno izbere prvi objekt z volumnom oz utežjo 1 enote in investitorjeva funkcija postane $f^{1}(y,x)= 5 + y$. Na enak način, ko je $y \in \left[2, 4\right]$, $f^{1}(y,x)= 1 + y$. Kljub temu, da je investitorjeva funkcija navzgor omejena s 7 ($ \lim_{y \mathrel{\uparrow} 2} f^1(y, x) = 7 $), ta vrednost ni dosežena.
+	\end{corollary}
+	
+	Naslednja trditev povezje ceno prostornine z investitorjevim razmerjem med zaslužkom in ceno prostornine.
+	
+	\begin{theorem}
+	Naj bo $\underline{b} = 0$ in $t < 0$. Če je  $| t | > \underset{1 \leq j \leq n}{max}(\frac{d_j}{a_j})$,  potem je $(y^*, x^*) = (0, 0_n)$ optimalna rešitev.
+	\end{theorem}
+	
+	\begin{proof}
+	Naj bo $(x, y)$ možna rešitev za dan BKP. Najprej z razširitvijo pogoja $ ax \leq y$ s $t$ $(t < 0)$ dobimo $(ta + d)x \geq ty + dx = f^{1}(y,x)$. Nato, ker je $ta_j + d_j < 0$ za $j = 1, \dots , n$ in $ x \in \{0, 1 \}^n$, sledi, da je $(ta + d)x \leq 0$, torej $f^{1}(y,x) \leq 0$. Vidimo, da ker je $(y^*, x^*) = (0, 0_n)$ možna rešitev danega BKP, v katerem je $f^{1}(y,x) = 0$, je ta rešitev tudi optimalna.
+	\end{proof}
+	
+	Če je $\infty > \overline{b} \geq \sum_{i=1}^na_i$ in $t > 0$, potem je optimalna rešitev trivialna: $x^* = (1, \dots, 1)$ in $y^* = \overline{b}$. Če sta $d$ in $c$ kolinearna ($d = \alpha c$, kjer $\alpha > 0$) in $t \geq 0$, potem je reševanje BKP enako reševanju problema nahrbtnika s kapaciteto $\overline{b}$ za posrednika.
+	
+	\begin{definition}
+	Diskreten dvostopenjski problem nahrbtnika (BKPd) je dvostopenjski problem nahrbtnika v katerem je spremenljivka, ki jo določi investitor diskretna.
+	\end{definition}
+
+	\begin{theorem}
+	Če je $t \leq 0$, potem je vsaka optimalna rešitev $(y^*, x^*)$ za BKPd, tudi optimalna rešitev za BKP.
+	
+	Če je $t > 0$ in če optimalna rešitev za BKP obstaja, potem je optimalna tudi za BKPd.	
+	\end{theorem}
+	
+	\begin{proof}
+	Prvi način: Iz \textbf{Trditve 1} sledi, da optimalna rešitev $(y^*, x^*)$ obstaja. Dodatno, IR (BKPd) $\subset$ IR (BKP) in iz Dempe in Richer sledi, da je $y^*$ celo število.
+	
+	Drugi način: Direktno iz $(i,i)$ v Dempe in Richer.
+	\end{proof}
+
+	Iz \textbf{Trditve 3} sledi, da je reševanje BKP ekvivalentno reševanju BKPd, ko je $t$ negativen. Če je $t$ pozitiven in optimalna rešitev obstaja (glej Izrek 4 v Dempe in Richer), je ta dosežena v točki $(\overline{b}, x^*)$, kjer je $x^* \in P(\overline{b})$. Pomni, da optimalna rešitev BKPd vedno obstaja. Torej, če BKP ima optimalno rešitev, to lako dobimo z reševanjem zaporedja problemov nahrbtnika, ki vsebuje binarne spremenljivke, eno za vsak možno vrednost $y$. Algoritem, opisan v naslednjem poglavju, uporabi to lastnost.
+	
+		\pagebreak
+		
+% VIRI	
+		\begin{thebibliography}{9}
+		\addcontentsline{toc}{section}{Literatura}
+		
+			\bibitem{Brotcorne,Hanafi,Mansi2009} Brotcorne, L.; Hanafi, S.; Mansi, R. (2009). \textit{A dynamic programming algorithm for the bilevel knapsack problem} CountryXX: Elsevier.
+	
+		\end{thebibliography}
+	
+	
+	
+	
+\end{document}
