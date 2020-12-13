@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.10)  13 DEC 2020 09:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.10.10)  13 DEC 2020 18:31
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1176,10 +1176,10 @@ Package logreq Info: Writing requests to 'BKP_FPsem.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 19816 strings out of 492995
- 373946 string characters out of 6132703
- 786144 words of memory out of 5000000
- 23009 multiletter control sequences out of 15000+600000
+ 19824 strings out of 492995
+ 374058 string characters out of 6132703
+ 786148 words of memory out of 5000000
+ 23017 multiletter control sequences out of 15000+600000
  11510 words of font info for 44 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,16n,67p,1272b,1435s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1196,7 +1196,7 @@ exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/te
 xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texl
 ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texliv
 e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on BKP_FPsem.pdf (7 pages, 156973 bytes).
+Output written on BKP_FPsem.pdf (7 pages, 156048 bytes).
 PDF statistics:
  107 PDF objects out of 1000 (max. 8388607)
  68 compressed objects within 1 object stream
