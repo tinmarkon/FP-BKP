@@ -92,7 +92,7 @@
 	
 	Dvostopenjski programi omogočajo modeliranje situacij, kjer glavni odločevalec, v nadaljevanju poimenovan investitor, optimizira svoja sredstva s tem, da neposredno upošteva odziv posrednika na njegovo odločitev o višini vložka. V primeru dvostopenjskega problema nahrbtnika (Bilevel Knapsack Problem), v nadaljevanju BKP, investitor določi prostornino nahrbtnika z namenom maksimizacije dobička, med tem ko se posrednik sooča z 0-1 problemom nahrbtnika s prostornino določeno s strani investitorja. BKP je ustrezen za modeliranje problema »ustreznega financiranja«, kjer posameznik (tj. investitor), svoja sredstva razdeli med netvegano naložbo s fiksnim donosom (npr. varčevalni račun, državna obveznica) in bolj tvegano naložbo, preko posrednika kot je banka ali bančni posrednik (broker). Ta kupi delnice ali obveznice z namenom maksimizacije svojega dobička s tem, da upošteva omejitve finančnih sredstev (prostornina nahrbtnika) investitorja in ustvari donos z ustrezno izbiro investicij. Podobno uporabo modeliranja lahko opazimo na področju upravljanja s proizvodi, kjer se podjetje odloča koliko enot izdelkov naj proda samo in koliko preko posrednika.
 	
-	BKP je mešan celoštevilski dvostopenjski problem predstavljen s strani Dempe in Richter, ki sta za rešitev predstavila "branch-and-bound" okvir (tj. razveji in omeji). V najini nalogi najprej razširiva potrebne in zadostne pogoje za obstoj optimalne rešitve. Nato predlagava enostaven in učinkovit algoritem dinamičnega programiranja za reševanje problema. V nasprotju s pristopom Dempe in Richter, kjer je beležen seznam nedominantnih rešitev, tukaj beležimo samo objektivne funkcijske vrednosti za oba, investitorja in posrednika, tekom dinamičnega procesa.
+	BKP je mešan celoštevilski dvostopenjski problem predstavljen s strani Dempe in Richter, ki sta za rešitev predstavila "branch-and-bound" okvir (tj. razveji in omeji). V najini nalogi najprej razširiva potrebne in zadostne pogoje za obstoj optimalne rešitve. Nato predlagava enostaven in učinkovit algoritem dinamičnega programiranja za reševanje problema. V nasprotju s pristopom Dempe in Richter, kjer je beležen seznam nedominantnih rešitev, tukaj beležimo samo ciljne funkcijske vrednosti za oba, investitorja in posrednika, tekom dinamičnega procesa.
 		
 	\section{Formulacija in lastnosti problema}
 	
@@ -159,22 +159,14 @@ kjer so $a$, $c$ in $d$ celoštevilske vrednosti in $a$, $c$, $d$, $\underline{b
 
 	Iz \textbf{Trditve 3} sledi, da je reševanje BKP ekvivalentno reševanju BKPd, ko je $t$ negativen. Če je $t$ pozitiven in optimalna rešitev obstaja (glej Izrek 4 v Dempe in Richter), je ta dosežena v točki $(\overline{b}, x^*)$, kjer je $x^* \in P(\overline{b})$. Pomni, da optimalna rešitev BKPd vedno obstaja. Torej, če BKP ima optimalno rešitev, to lako dobimo z reševanjem zaporedja problemov nahrbtnika, ki vsebuje binarne spremenljivke, eno za vsak možno vrednost $y$. Algoritem, opisan v naslednjem poglavju, uporabi to lastnost.
 	\section{Načrt za nadalnje delo}
-	V nadaljevanju bova s programskim jezikom Python napisala program, ki s pomočjo dinamičnega programiranja izračuna optimalno rešitev $(y^*, x^*)$ glede na naključno generirane podatke. S pomočjo primerov iz dokumenta bova preverila tudi da program deluje pravilno. S pomočjo algoritma lahko izračunamo rešitev v primeru optimističnega primera, kot tudi pesimističnega. V najslabšem scenariju ima časovno zahtevnost $\theta(n\overline{b})$. Iz \textbf{Trditve 3} je razvidno, da je reševanje problema BKP ekvivalentno reševanju posrednikovega problema nahrbtnika za vsako celo število iz intervala $[ \underline{b}, \overline{b}]$. Algoritem v svojem teku jemlje obe ciljni funkciji (ali sta pri nama poimenovani drugače??). To dosežemo z dvema fazama, ki sta podrobneje opisani spodaj. \\
+	V nadaljevanju bova s programskim jezikom Python napisala program, ki s pomočjo dinamičnega programiranja izračuna optimalno rešitev $(y^*, x^*)$ glede na naključno generirane podatke. S pomočjo primerov iz dokumenta bova preverila tudi da program deluje pravilno. S pomočjo algoritma lahko izračunamo rešitev v primeru optimističnega primera, kot tudi pesimističnega. V najslabšem scenariju ima časovno zahtevnost $\theta(n\overline{b})$. Iz \textbf{Trditve 3} je razvidno, da je reševanje problema BKP ekvivalentno reševanju posrednikovega problema nahrbtnika za vsako celo število iz intervala $[ \underline{b}, \overline{b}]$. Algoritem v svojem teku jemlje obe ciljni funkciji. To dosežemo z dvema fazama, ki sta podrobneje opisani spodaj. \\
 
 	\textbf{Forward phase} \\
-	Prva faza je sestavljena iz dveh zank in nam zgenerira za vsak naslednji predmet $k$, ki ga dodamo v torbo in za vsako kapaciteto $y$. Opomniti je treba, da funkcija  $\widetilde{f}^{1}_{k}(y)$ ne upošteva ceno prostornine nahrbtnika, in je torej   $\widetilde{f}^{1}_{k}(y) = f^{1}_{k}(y)+ty$ \\
+	Prva faza je sestavljena iz dveh zank in nam na vsakem koraku zgenerira maksimalno vrednost nahrbtnika, če v njega dodamo še k-ti predmet. To naredimo za vsako kapaciteto $y$. Opomniti je treba, da funkcija  $\widetilde{f}^{1}_{k}(y)$ ne upošteva ceno prostornine nahrbtnika, in je torej   $\widetilde{f}^{1}_{k}(y) = f^{1}_{k}(y)+ty$ \\
 
 	\textbf{Backtracking phase} \\
-	Druga faza je uporabljena za iskanje optimalne rešitve $(y^*, x^*)$, ki ustreza optimalni vrednosti določeni iz prejšnje faze. Optimalna kapaciteta $y$ je generirana z n-tim stolpcem tabele investitiorja, ki jo dobimo na sledeč način. 
+	Druga faza je uporabljena za iskanje optimalne rešitve $(y^*, x^*)$, ki ustreza optimalni vrednosti določeni iz prejšnje faze. Optimalna kapaciteta $y$ je generirana z n-tim stolpcem tabele investitiorja.
 
-	\begin{theorem} Naj bo $(y^*, x^*)$ optimalna rešitev za naš BKPd (Ali boma to sploh pisala tu?)
-	
-	Če je $t \leq 0$ potem je $\widetilde{f}^{1}_{n}(y^*) + ty^* = \max\{\widetilde{f}^{1}_{n}(y) + ty: y \in \{\underline{b}, \underline{b} + 1, \dots, \overline{b} \} \} $
-
-	Če  je $t > 0$ potem obstajata dve možnosti:
-	
-
-	\end{theorem}
 	
 	
 		\pagebreak
