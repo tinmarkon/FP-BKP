@@ -25,9 +25,9 @@ def generiranjeTabel(teže, s_prihodek, i_prihodek, kapital, optimisticen = True
 
                 else:
                     if optimisticen:
-                        fiksni_investitor.append(max(investitor[-1][j], investitor[k-1][j - teže[k]] + i_prihodek[k]))
+                        fiksni_investitor.append(max(investitor[-1][j], investitor[-1][j - teže[k]] + i_prihodek[k]))
                     else:
-                        fiksni_investitor.append(min(investitor[-1][j], investitor[k-1][j - teže[k]] + i_prihodek))
+                        fiksni_investitor.append(min(investitor[-1][j], investitor[-1][j - teže[k]] + i_prihodek[k]))
         investitor.append(fiksni_investitor)
         sledilec.append(fiksni_sledilec)
     return investitor, sledilec
