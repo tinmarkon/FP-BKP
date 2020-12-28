@@ -1,5 +1,5 @@
 ### Vhodni podatki: teže izdelkov (seznam), s_prihodek (prihodek sledilca - seznam), i_prihodek(prihodek investitorja -seznam) 
-# kapital nahrbtnika (število) ###
+# kapital (število), optimisticen (T/F) ###
 
 def generiranjeTabel(teže, s_prihodek, i_prihodek, kapital, optimisticen = True):
     sledilec = list()
@@ -11,7 +11,7 @@ def generiranjeTabel(teže, s_prihodek, i_prihodek, kapital, optimisticen = True
         fiksni_sledilec = list()
         fiksni_investitor = list()
         for j in range(0, kapital + 1): ###TODO Kaj če kapital ni celo število?
-            if (j < teže[k]): 
+            if (j < teže[k]):  ###TODO ali lahko skrajšam kodo tako da bo manj if stavkov??
                fiksni_investitor.append(investitor[-1][j])
                fiksni_sledilec.append(sledilec[-1][j])
             else: 
@@ -32,7 +32,7 @@ def generiranjeTabel(teže, s_prihodek, i_prihodek, kapital, optimisticen = True
         sledilec.append(fiksni_sledilec)
     return investitor, sledilec
     
-def prvi_predmeti(kapital, s_prihodek, i_prihodek, teže):
+def prvi_predmeti(kapital, s_prihodek, i_prihodek, teže): ## To lahko vstavim v prvo funkcijo??
     seznam_sledilec = list()
     seznam_investitor = list()
     for j in range(0, kapital + 1):
