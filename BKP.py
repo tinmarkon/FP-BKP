@@ -46,7 +46,6 @@ def prvi_predmeti(kapital, s_prihodek, i_prihodek, teze): ## To lahko vstavim v 
 
 def iskanjeResitvev(investitorjevaMatrika, sledilcevaMatrika, sKapital, kapital, cenaEnote, teze, i_prih, s_prih): #To bi bila lahko funkcija optimalni y
     invResitev = investitorjevaMatrika[-1] ## Obe matriki lahko zgeneriram znotraj funkcije tako da kličem prvo?
-    sleResitev = sledilcevaMatrika[-1]
     zasluzek = 0
     optKapital = 0
     vmesniKapital = 0
@@ -80,7 +79,7 @@ teze = [5,3,2,1]
 s_prih = [1,1,1,1]
 i_prih = [3,5,1,9]
 kap = 6
-
+t = -2
 
 inv, sle = generiranjeTabel(teze, s_prih, i_prih, kap)
 
