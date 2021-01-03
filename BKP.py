@@ -1,6 +1,8 @@
 ### Vhodni podatki: teže izdelkov (seznam), s_prihodek (prihodek sledilca - seznam), i_prihodek(prihodek investitorja -seznam) 
 # kapital (število), optimisticen (T/F) ###
 
+### TODO naredi objekt z vsemi temi podatki
+
 def generiranjeTabel(teže, s_prihodek, i_prihodek, kapital, optimisticen = True):
     sledilec = list()
     investitor = list()
@@ -10,7 +12,7 @@ def generiranjeTabel(teže, s_prihodek, i_prihodek, kapital, optimisticen = True
     for k in range(1, len(teže)):
         fiksni_sledilec = list()
         fiksni_investitor = list()
-        for j in range(0, kapital + 1): ###TODO Kaj če kapital ni celo število?
+        for j in range(0, kapital + 1): 
             if (j < teže[k]):  ###TODO ali lahko skrajšam kodo tako da bo manj if stavkov??
                fiksni_investitor.append(investitor[-1][j])
                fiksni_sledilec.append(sledilec[-1][j])
@@ -44,11 +46,46 @@ def prvi_predmeti(kapital, s_prihodek, i_prihodek, teže): ## To lahko vstavim v
             seznam_investitor.append(0)
     return seznam_sledilec, seznam_investitor
 
+def iskanjeResitvev(investitorjevaMatrika, sledilcevaMatrika, sKapital, kapital, cenaEnote, teze, i_prih, s_prih): #To bi bila lahko funkcija optimalni y
+    invResitev = investitorjevaMatrika[-1] ## Obe matriki lahko zgeneriram znotraj funkcije tako da kličem prvo?
+    sleResitev = sledilcevaMatrika[-1]
+    zasluzek = 0
+    optKapital = 0
+    vmesniKapital = 0
+    predmeti = list()
+    for i in range(sKapital, kapital + 1):  #TODO naredi transformacijo na celem seznamu in in najdo max element in njegov index
+        if (zasluzek < invResitev[i] + i * cenaEnote): #Kaj se zgodi v primeru da sta enaka??
+            zasluzek = invResitev[i] + i * cenaEnote
+            optKapital = i
+            vmesniKapital = i
+    for j in range(len(sledilcevaMatrika) - 1, 1, -1):
+        if sledilcevaMatrika[j - 1][vmesniKapital] != sledilcevaMatrika[j - 1][vmesniKapital - teze[j]] + s_prih[j]:
+            if sledilcevaMatrika[j][vmesniKapital] == sledilcevaMatrika[j - 1][vmesniKapital]:
+                predmeti.append(0)
+        if sledilcevaMatrika[j][vmesniKapital] == sledilcevaMatrika[j - 1][vmesniKapital - teze[j]] + s_prih[j]:
+                predmeti.append(1)
+                vmesniKapital = vmesniKapital - teze[j]
+        else:
+            if investitorjevaMatrika[j][vmesniKapital] == investitorjevaMatrika[j-1][vmesniKapital]:
+                predmeti.append(0)
+            if investitorjevaMatrika[j][vmesniKapital] == investitorjevaMatrika[j-1][vmesniKapital - teze[j]] + i_prih[j]:
+                predmeti.append(0)
+                vmesniKapital = vmesniKapital - teze[j]
+    if sledilcevaMatrika[0][vmesniKapital] == 0:
+        predmeti.append(0)
+    else:
+        predmeti.append(1)
+    return predmeti[::-1], optKapital
 
-teže = [5,3,2,1]
+
+
+t = -2
+teze = [5,3,2,1]
 s_prih = [1,1,1,1]
 i_prih = [3,5,1,9]
 kap = 6
 
-test = generiranjeTabel(teže, s_prih, i_prih, kap)
+inv, sle = generiranjeTabel(teze, s_prih, i_prih, kap)
+
+print(iskanjeResitvev(inv, sle, 0, kap, t, teze, i_prih, s_prih ))
 
