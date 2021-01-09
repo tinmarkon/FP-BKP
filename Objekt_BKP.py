@@ -21,6 +21,7 @@ class BKP:
 bkp1 = BKP([2, 4, 1, 8], [3, 3, 2, 2], [1, 2, 3, 4], 8, True)
 
 print(bkp1.kapital)
-print(bkp1.casovna_zahtevnost)
+print(bkp1.optimalna_resitev())
+print(bkp1.casovna_zahtevnost())
 
         
