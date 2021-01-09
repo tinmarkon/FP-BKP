@@ -21,17 +21,10 @@ class BKP:
         print("Casovna zahtevnost: {}".format(konec - zacetek))
         return(resitev)
 
-
-    def casovna_zahtevnost(self):
-        print("Cas, ki ga algoritem porabi za izracun opt. resitve danega problema:")
-        
-        ### Tu klicema bkp ###
-       
-        return(konec - zacetek)
-
-bkp1 = BKP([2, 4, 1, 8], [3, 3, 2, 2], [1, 2, 3, 4], 0, 8, -2, True)
-bkp2 = BKP([1, 2, 3, 4], [4,5,10,15], [5,1,1,1], 1, 4, -1, True)
-bkp3 = BKP([5,3,2,1], [1, 1, 1, 1], [3,5,1,9], 0, 6, -2, True)
+# Testni primeri
+#bkp1 = BKP([2, 4, 1, 8], [3, 3, 2, 2], [1, 2, 3, 4], 0, 8, -2, True)
+#bkp2 = BKP([1, 2, 3, 4], [4,5,10,15], [5,1,1,1], 1, 4, -1, True)
+#bkp3 = BKP([5,3,2,1], [1, 1, 1, 1], [3,5,1,9], 0, 6, -2, True)
 
 
 
