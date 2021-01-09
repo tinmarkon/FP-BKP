@@ -10,11 +10,10 @@ for n in st_predmetov:
     for i in range(0, n):
         p = random.randint(1, 30)
         koef1.append(p)
+        r = random.randint(1, 30)
+        koef2.append(r)
     print(koef1)
-    for i in range(0, n):
-        p = random.randint(1, 30)
-        koef2.append(p)
-    print(koef1)
+    print(koef2)
     for i in range(0, n):
         p = random.randint(1, y)
         utezi_predmetov.append(p)
