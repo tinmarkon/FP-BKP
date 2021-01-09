@@ -1,6 +1,3 @@
-### Vhodni podatki: teze izdelkov (seznam), s_prihodek (prihodek sledilca - seznam), i_prihodek(prihodek investitorja -seznam) 
-# kapital (stevilo), optimisticen (T/F) ###
-
 def generiranjeTabel(teze, s_prihodek, i_prihodek, kapital, optimisticen = True):
     sledilec = list()
     investitor = list()
@@ -20,7 +17,7 @@ def generiranjeTabel(teze, s_prihodek, i_prihodek, kapital, optimisticen = True)
                 if (sledilec[-1][j] != sledilec[-1][j - teze[k]] + s_prihodek[k]):
                     if fiksni_sledilec == sledilec[-1][j]:
                         fiksni_investitor.append(investitor[-1][j])
-                    else: ### Ali moram tukaj pisat pogoj? A obstaja situacija ko se ne zgodi nujno drugo?
+                    else: 
                         fiksni_investitor.append(investitor[-1][j - teze[k]] + i_prihodek[k])  
 
                 else:
@@ -32,7 +29,7 @@ def generiranjeTabel(teze, s_prihodek, i_prihodek, kapital, optimisticen = True)
         sledilec.append(fiksni_sledilec)
     return investitor, sledilec
     
-def prvi_predmeti(kapital, s_prihodek, i_prihodek, teze): ## To lahko vstavim v prvo funkcijo??
+def prvi_predmeti(kapital, s_prihodek, i_prihodek, teze):
     seznam_sledilec = list()
     seznam_investitor = list()
     for j in range(0, kapital + 1):
@@ -44,14 +41,14 @@ def prvi_predmeti(kapital, s_prihodek, i_prihodek, teze): ## To lahko vstavim v 
             seznam_investitor.append(0)
     return seznam_sledilec, seznam_investitor
 
-def iskanjeResitvev(investitorjevaMatrika, sledilcevaMatrika, sKapital, kapital, cenaEnote, teze, i_prih, s_prih): #To bi bila lahko funkcija optimalni y
-    invResitev = investitorjevaMatrika[-1] ## Obe matriki lahko zgeneriram znotraj funkcije tako da klicem prvo?
+def iskanjeResitvev(investitorjevaMatrika, sledilcevaMatrika, sKapital, kapital, cenaEnote, teze, i_prih, s_prih): 
+    invResitev = investitorjevaMatrika[-1] 
     zasluzek = 0
     optKapital = 0
     vmesniKapital = 0
     predmeti = list()
-    for i in range(sKapital, kapital + 1):  #TODO naredi transformacijo na celem seznamu in in najdo max element in njegov index
-        if (zasluzek < invResitev[i] + i * cenaEnote): #Kaj se zgodi v primeru da sta enaka??
+    for i in range(sKapital, kapital + 1):  
+        if (zasluzek < invResitev[i] + i * cenaEnote): 
             zasluzek = invResitev[i] + i * cenaEnote
             optKapital = i
             vmesniKapital = i
@@ -74,13 +71,3 @@ def iskanjeResitvev(investitorjevaMatrika, sledilcevaMatrika, sKapital, kapital,
         predmeti.append(1)
     return predmeti[::-1], optKapital
 
-
-#teze = [1, 2, 3, 4]
-#s_prih = [4, 5, 10, 15]
-#i_prih = [5, 1, 1, 1]
-#kap = 4
-#t = 1
-
-#inv, sle = generiranjeTabel(teze, s_prih, i_prih, kap)
-
-#print(iskanjeResitvev(inv, sle, 0, kap, t, teze, i_prih, s_prih ))
