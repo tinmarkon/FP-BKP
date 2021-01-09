@@ -9,10 +9,10 @@ class BKP:
         self.optimisticen = True
 
     def optimalna_resitev(self):
-        print("resitev, ki jo vrne funkcija") #uporabimo funkcijo v BKP.py
+        print("Optimalna resitev danega problema:") #uporabimo funkcijo iz BKP.py
 
     def casovna_zahtevnost(self):
-        print("koliko casa porabi algoritem")
+        print("Cas, ki ga algoritem porabi za izracun opt. resitve danega problema:")
         zacetek = time.perf_counter()
         ### Tu kličema bkp ###
         konec = time.perf_counter()
