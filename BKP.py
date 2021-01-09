@@ -10,8 +10,8 @@ def generiranjeTabel(teze, s_prihodek, i_prihodek, kapital, optimisticen = True)
     for k in range(1, len(teze)):
         fiksni_sledilec = list()
         fiksni_investitor = list()
-        for j in range(0, kapital + 1): ###TODO Kaj ce kapital ni celo stevilo?
-            if (j < teze[k]):  ###TODO ali lahko skrajsam kodo tako da bo manj if stavkov??
+        for j in range(0, kapital + 1): 
+            if (j < teze[k]):  
                fiksni_investitor.append(investitor[-1][j])
                fiksni_sledilec.append(sledilec[-1][j])
             else: 
@@ -45,7 +45,7 @@ def prvi_predmeti(kapital, s_prihodek, i_prihodek, teze): ## To lahko vstavim v 
     return seznam_sledilec, seznam_investitor
 
 def iskanjeResitvev(investitorjevaMatrika, sledilcevaMatrika, sKapital, kapital, cenaEnote, teze, i_prih, s_prih): #To bi bila lahko funkcija optimalni y
-    invResitev = investitorjevaMatrika[-1] ## Obe matriki lahko zgeneriram znotraj funkcije tako da klicem prvo?
+    invResitev = investitorjevaMatrika[-1] ## Obe matriki lahko zgeneriram znotraj funkcije tako da kličem prvo?
     zasluzek = 0
     optKapital = 0
     vmesniKapital = 0
@@ -55,17 +55,17 @@ def iskanjeResitvev(investitorjevaMatrika, sledilcevaMatrika, sKapital, kapital,
             zasluzek = invResitev[i] + i * cenaEnote
             optKapital = i
             vmesniKapital = i
-    for j in range(len(sledilcevaMatrika) - 1, 1, -1):
+    for j in range(len(sledilcevaMatrika) - 1, 0, -1):
         if sledilcevaMatrika[j - 1][vmesniKapital] != sledilcevaMatrika[j - 1][vmesniKapital - teze[j]] + s_prih[j]:
             if sledilcevaMatrika[j][vmesniKapital] == sledilcevaMatrika[j - 1][vmesniKapital]:
                 predmeti.append(0)
-        if sledilcevaMatrika[j][vmesniKapital] == sledilcevaMatrika[j - 1][vmesniKapital - teze[j]] + s_prih[j]:
+            else:
                 predmeti.append(1)
                 vmesniKapital = vmesniKapital - teze[j]
         else:
             if investitorjevaMatrika[j][vmesniKapital] == investitorjevaMatrika[j-1][vmesniKapital]:
                 predmeti.append(0)
-            if investitorjevaMatrika[j][vmesniKapital] == investitorjevaMatrika[j-1][vmesniKapital - teze[j]] + i_prih[j]:
+            else:
                 predmeti.append(0)
                 vmesniKapital = vmesniKapital - teze[j]
     if sledilcevaMatrika[0][vmesniKapital] == 0:
@@ -75,12 +75,12 @@ def iskanjeResitvev(investitorjevaMatrika, sledilcevaMatrika, sKapital, kapital,
     return predmeti[::-1], optKapital
 
 
-teze = [5,3,2,1]
-s_prih = [1,1,1,1]
-i_prih = [3,5,1,9]
-kap = 6
-t = -2
+#teze = [1, 2, 3, 4]
+#s_prih = [4, 5, 10, 15]
+#i_prih = [5, 1, 1, 1]
+#kap = 4
+#t = 1
 
-inv, sle = generiranjeTabel(teze, s_prih, i_prih, kap)
+#inv, sle = generiranjeTabel(teze, s_prih, i_prih, kap)
 
-print(iskanjeResitvev(inv, sle, 0, kap, t, teze, i_prih, s_prih ))
+#print(iskanjeResitvev(inv, sle, 0, kap, t, teze, i_prih, s_prih ))
