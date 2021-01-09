@@ -1,4 +1,5 @@
 import time
+
 class BKP:
 
     def __init__(self, teze, s_prihodek, i_prihodek, kapital, optimisticen):
@@ -14,7 +15,7 @@ class BKP:
     def casovna_zahtevnost(self):
         print("Cas, ki ga algoritem porabi za izracun opt. resitve danega problema:")
         zacetek = time.perf_counter()
-        ### Tu kličema bkp ###
+        ### Tu klicema bkp ###
         konec = time.perf_counter()
         return(konec - zacetek)
 
