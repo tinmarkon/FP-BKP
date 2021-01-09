@@ -1,3 +1,4 @@
+import time
 class BKP:
 
     def __init__(self, teze, s_prihodek, i_prihodek, kapital, optimisticen):
@@ -12,6 +13,10 @@ class BKP:
 
     def casovna_zahtevnost(self):
         print("koliko casa porabi algoritem")
+        zacetek = time.perf_counter()
+        ### Tu kličema bkp ###
+        konec = time.perf_counter()
+        return(konec - zacetek)
 
 bkp1 = BKP([2, 4, 1, 8], [3, 3, 2, 2], [1, 2, 3, 4], 8, True)
 
