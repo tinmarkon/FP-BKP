@@ -19,5 +19,5 @@ def gen_n(n, y): #generiranje seznamov z n predmetov, y ~ max volumen
 for i in st_predmetov:
     koef1, koef2, utezi, kapital = gen_n(i, 40)
     bkp = BKP(utezi, koef1, koef2, 0, kapital, -1, True)
-    print(bkp.optimalna_resitev())
+    bkp.optimalna_resitev()
     
