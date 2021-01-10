@@ -54,7 +54,7 @@ class BKP:
             sledilec.append(fiksni_sledilec)
         return investitor, sledilec
 
-    def iskanje_resitvev(self):
+    def optimalna_resitvev(self):
         investitorjeva_matrika, sledilceva_matrika = self.generiranje_tabel()
         invResitev = investitorjeva_matrika[-1]
         zasluzek = 0
