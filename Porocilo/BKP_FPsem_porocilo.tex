@@ -83,7 +83,7 @@
 	
 	\begin{abstract}
 	
-	V nalogi bova obravnavala reševanje dvostopenjskega problema nahrbtnika z dinamičnim programiranjem. Za izdelavo algoritma bova uporabila programski jezik Python.
+	V nalogi obravnavava reševanje dvostopenjskega problema nahrbtnika z dinamičnim programiranjem. Najprej problem opiševa in ga teoretično formulirava, nato pa za reševanje izdelava algoritem v programskem jeziku \textit{Python}. Preizkusiva ga na primerih z znano rešitvijo in izmeriva njegovo časovno zatevnost na naključno generiranih podatkih.
 	
 	\end{abstract}
 	
@@ -162,7 +162,7 @@ kjer so $a$, $c$ in $d$ celoštevilske vrednosti in $a$, $c$, $d$, $\underline{b
 	
 	\section{Opis programa}
 	
-	S programskim jezikom Python sva napisala program, ki s pomočjo dinamičnega programiranja izračuna optimalno rešitev $(y^*, x^*)$ glede na naključno generirane podatke. S pomočjo primerov iz dokumenta sva preverila tudi, da program deluje pravilno. Z uporabo algoritma lahko izračunamo rešitev v primeru optimističnega primera, kot tudi pesimističnega. V najslabšem scenariju ima časovno zahtevnost $\theta(n\overline{b})$, kar v naslednjem poglavju, s testom na naključnih podatkih, tudi pokaževa. Iz \textbf{Trditve 3} je razvidno, da je reševanje problema BKP ekvivalentno reševanju posrednikovega problema nahrbtnika za vsako celo število iz intervala $[ \underline{b}, \overline{b}]$. Algoritem v svojem teku jemlje obe ciljni funkciji. To dosežemo z dvema fazama, ki sta podrobneje opisani spodaj. \\
+	S programskim jezikom $Python$ sva napisala program, ki s pomočjo dinamičnega programiranja izračuna optimalno rešitev $(y^*, x^*)$ glede na naključno generirane podatke. S pomočjo primerov iz dokumenta sva preverila, če program deluje pravilno. Z uporabo algoritma lahko izračunamo rešitev tako v primeru optimističnega, kot tudi pesimističnega primera. V najslabšem scenariju ima časovno zahtevnost $\theta(n\overline{b})$, kar v zadnjem poglavju, s testom na naključnih podatkih, tudi pokaževa. Iz \textbf{Trditve 3} je razvidno, da je reševanje problema BKP ekvivalentno reševanju posrednikovega problema nahrbtnika za vsako celo število iz intervala $[ \underline{b}, \overline{b}]$. Algoritem v svojem teku jemlje obe ciljni funkciji. To dosežemo z dvema fazama, ki sta podrobneje opisani spodaj. \\
 
 	\textbf{Forward phase} \\
 	Prva faza je sestavljena iz dveh zank: zunanja zanka s koraki $k \in \left[1, \dots , n \right]$ in notranja zankna vezana na celoštevilsko kapaciteto nahrbtnika $y \in \left[ \underline{b}, \overline{b} \right]$. Med to fazo sta generirani dve tabeli. Prva vsebuje optimalne vrednosti sledilca
@@ -211,11 +211,11 @@ kjer so $a$, $c$ in $d$ celoštevilske vrednosti in $a$, $c$, $d$, $\underline{b
        		\text{$d_1$ for $y = a_1, \dots, \overline{b}$} \\
     	\end{cases}
 	\]
-	Sledilec izbere prvi predmet, samo če je dana kapaciteta zadostna. Funkcija za prvi korak je poimenovana \texttt{prvi\_predmeti} se nahaja v datoteki \texttt{BKP.py}.
+	Sledilec izbere prvi predmet, samo če je dana kapaciteta zadostna. Funkcija za prvi korak je poimenovana \texttt{prvi\_predmeti} in se nahaja v datoteki \texttt{BKP.py}.
 	
 	Za $k > 1$ se za generiranje sledilčeve tabele uporabi rekurzija v 3. vrstici algoritma. Investitorjeva tabela je generirana glede na moč seznama sledilčeve optimalne rešitve. Če je sledilčeva rešitev enolična, je investitorjeva funkcija dana 7. in 8. vrstici, v nasprotnem primeru pa v 10. (optimističen scenarij) ali 11. (pesimističen scenarij) vrstici. 
 	
-	Funkcijo opisano z zgornjo psevdokodo sva poimenovala \texttt{generiranje\_tabel} se nahaja v datoteki \texttt{BKP.py}. Vrne nam dva seznama $k$ seznamov, prvega za investitorja in drugega za sledilca. \\
+	Funkcijo opisano z zgornjo psevdokodo sva poimenovala \texttt{generiranje\_tabel} se nahaja v datoteki \texttt{BKP.py}. Vrne nam dva seznama $n$ seznamov, prvega za investitorja in drugega za sledilca. \\
 	
 	\textbf{Backtracking phase} \\
 	Druga faza je uporabljena za iskanje optimalne rešitve $(y^*, x^*)$, ki ustreza optimalni vrednosti določeni v prejšnji fazi. Optimalna kapaciteta $y$ je generirana z n-tim stolpcem tabele investitiorja (Opozoriti je potrebno, da se v programskem jeziku \textit{Python} indeksi elementov seznama začnejo z 0. Uporabila sva tabele velikosti $n \times (n+1)$, torej dejansko gledamo $(n+1)-ti$ stolpec.), kot je opisano v naslednji trditvi.
@@ -267,7 +267,7 @@ kjer so $a$, $c$ in $d$ celoštevilske vrednosti in $a$, $c$, $d$, $\underline{b
 	
 	Za lažje testiranje algoritma na praktičnih problemih sva izdelala Class \texttt{BKP}, definiran v \texttt{BKP.py}. Objekt predstavlja željen BKP, saj ima za atribute vse potrebne parametre. Tako za vsak obravnavan problem izdelamo objekt, na katerem lahko uporabimo algoritem. \\
 	
-	Testna primera sva si sposodila iz članka in sta navedena na koncu datoteke \texttt{BKP.py}. \texttt{bkp\_primer1} nima optimalne rešitve, \texttt{bkp\_primer2} pa nam vrne $( [0, 0, 0, 1 ], 1)$, kar je v obeh primerih pravilno.
+	Testna primera sva si sposodila iz članka $[1]$ in sta navedena na koncu datoteke \texttt{BKP.py}. \texttt{bkp\_primer1} nima optimalne rešitve, \texttt{bkp\_primer2} pa nam vrne $( [0, 0, 0, 1 ], 1)$, kar je v obeh primerih pravilno.
 	
 	\section{Časovna zatevnost}
 	
