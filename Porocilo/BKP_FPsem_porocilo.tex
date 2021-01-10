@@ -168,7 +168,7 @@ kjer so $a$, $c$ in $d$ celoštevilske vrednosti in $a$, $c$, $d$, $\underline{b
 	Prva faza je sestavljena iz dveh zank: zunanja zanka s koraki $k \in \left[1, \dots , n \right]$ in notranja zankna vezana na celoštevilsko kapaciteto nahrbtnika $y \in \left[ \underline{b}, \overline{b} \right]$. Med to fazo sta generirani dve tabeli. Prva vsebuje optimalne vrednosti sledilca
 	$$ f^{2}_{k}(y) = max \left\{ \sum_{j=1}^{k} c_j x_j : \sum_{j=1}^{k} a_j x_j \leq y, x \in \{0, 1\}^k \right\} $$
 	
-	druga pa optimalnevrednosti investitorja
+	druga pa optimalne vrednosti investitorja
 	$$ \widetilde{f}^{1}_{k}(y) = max \left\{ \sum_{j=1}^{k} d_j x_j : x \in P(y) \right\} $$
 	
 	na vsakem koraku $k$ in za vsako kapaciteto $y$. Za graditev teh tabel z dinamicnim programiranjem se rekurzija izvede za vse vrednosti $y$ med $0$ in $\overline{b}$ in za vsak predmet. Opomniti je treba, da funkcija  $\widetilde{f}^{1}_{k}(y)$ ne upošteva ceno prostornine nahrbtnika, in je torej   $\widetilde{f}^{1}_{k}(y) = f^{1}_{k}(y)+ty$. \\
