@@ -56,16 +56,16 @@ class BKP:
 
     def optimalna_resitvev(self):
         investitorjeva_matrika, sledilceva_matrika = self.generiranje_tabel()
-        invResitev = investitorjeva_matrika[-1]
+        inv_resitev = investitorjeva_matrika[-1]
         zasluzek = 0
         optKapital = 0
         vmesniKapital = 0
         predmeti = list()
         for i in range(self.s_kapital, self.kapital + 1):
-            if (zasluzek < invResitev[i] + i * self.cena_enote):
-                zasluzek = invResitev[i] + i * self.cena_enote
-                optKapital = i
-                vmesniKapital = i
+            if (zasluzek < inv_resitev[i] + i * self.cena_enote):
+                    zasluzek = inv_resitev[i] + i * self.cena_enote
+                    optKapital = i
+                    vmesniKapital = i  
         for j in range(len(sledilceva_matrika) - 1, 0, -1):
             if sledilceva_matrika[j - 1][vmesniKapital] != sledilceva_matrika[j - 1][vmesniKapital - self.teze[j]] + self.s_prihodek[j]:
                 if sledilceva_matrika[j][vmesniKapital] == sledilceva_matrika[j - 1][vmesniKapital]:
@@ -83,9 +83,22 @@ class BKP:
             predmeti.append(0)
         else:
             predmeti.append(1)
-        return predmeti[::-1], optKapital
+        if(self.cena_enote <= 0):
+            return predmeti[::-1], optKapital
+        else:
+            maksimum = 0
+            for j in range(self.s_kapital, self.kapital):
+                if maksimum < inv_resitev[j] + self.cena_enote * (j + 1):
+                    maksimum = inv_resitev[j] + self.cena_enote * (j + 1)
+            if maksimum <= inv_resitev[self.kapital] + self.cena_enote * self.kapital:
+                return (predmeti[::-1], self.kapital)
+            else:
+                print("BKP nima optimalne resitve")
+                return None  
 
 ### PRIMERI ###
 #bkp1 = BKP([2, 4, 1, 8], [3, 3, 2, 2], [1, 2, 3, 4], 0, 8, -2, True)
-#bkp2 = BKP([1, 2, 3, 4], [4,5,10,15], [5,1,1,1], 1, 4, -1, True)
+bkp2 = BKP([1, 2, 3, 4], [4,5,10,15], [5,1,1,1], 1, 4, 1, True)
+bkp2.optimalna_resitvev()
 #bkp3 = BKP([5,3,2,1], [1, 1, 1, 1], [3,5,1,9], 0, 6, -2, True)
+#print(bkp3.optimalna_resitvev())
