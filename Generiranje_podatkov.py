@@ -4,8 +4,11 @@ from BKP import BKP
 from statistics import variance, mean
 import matplotlib.pyplot as plt
 
-st_predmetov = [10, 25, 50, 75, 100, 500, 1000] #V seznamu dolocis stevilo predmetov za problem
+st_predmetov = [10, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750] #V seznamu dolocis stevilo predmetov za problem
+#st_predmetov = [0, 50, 100, 200, 1000] #V seznamu dolocis stevilo predmetov za problem
 st_ponovitev = 100 ### Kolikokrat ponovimo izracun za vsako stevilo predmetov
+
+
 
 def gen_n(n, y): #generiranje seznamov z n predmeti, y ~ max volumen
     koef1 = []
@@ -38,8 +41,11 @@ for i in st_predmetov: ### For zanka za vsako stevilo predmetov
 y = [seznam_casov[i][0] for i in range(len(st_predmetov))] ### Seznam y koordinat - povprecja
 var = [seznam_casov[i][1] for i in range(len(st_predmetov))] ### seznam y koordinat - varianca
 
-plt.plot(st_predmetov, y, 'o', st_predmetov, var, 'x')
+plt.plot(st_predmetov, y, st_predmetov, var, 'x')
+plt.xlabel("Stevilo predmetov (n)")
+plt.ylabel("Povprecno izvajanje programa (s)")
 plt.show()
+
 
 
 
