@@ -7,6 +7,7 @@
 \usepackage{enumerate}
 \usepackage[normalem]{ulem}
 \usepackage{amsmath,amsthm,amssymb}
+\usepackage{algorithmic}
 \newtheorem{example}{Primer}
 \usepackage{graphicx}
 \usepackage{tabularx}
@@ -158,17 +159,106 @@ kjer so $a$, $c$ in $d$ celoštevilske vrednosti in $a$, $c$, $d$, $\underline{b
 	\end{proof}
 
 	Iz \textbf{Trditve 3} sledi, da je reševanje BKP ekvivalentno reševanju BKPd, ko je $t$ negativen. Če je $t$ pozitiven in optimalna rešitev obstaja (glej Izrek 4 v Dempe in Richter), je ta dosežena v točki $(\overline{b}, x^*)$, kjer je $x^* \in P(\overline{b})$. Pomni, da optimalna rešitev BKPd vedno obstaja. Torej, če BKP ima optimalno rešitev, to lako dobimo z reševanjem zaporedja problemov nahrbtnika, ki vsebuje binarne spremenljivke, eno za vsak možno vrednost $y$. Algoritem, opisan v naslednjem poglavju, uporabi to lastnost.
+	
 	\section{Načrt za nadalnje delo}
-	V nadaljevanju bova s programskim jezikom Python napisala program, ki s pomočjo dinamičnega programiranja izračuna optimalno rešitev $(y^*, x^*)$ glede na naključno generirane podatke. S pomočjo primerov iz dokumenta bova preverila tudi da program deluje pravilno. S pomočjo algoritma lahko izračunamo rešitev v primeru optimističnega primera, kot tudi pesimističnega. V najslabšem scenariju ima časovno zahtevnost $\theta(n\overline{b})$. Iz \textbf{Trditve 3} je razvidno, da je reševanje problema BKP ekvivalentno reševanju posrednikovega problema nahrbtnika za vsako celo število iz intervala $[ \underline{b}, \overline{b}]$. Algoritem v svojem teku jemlje obe ciljni funkciji. To dosežemo z dvema fazama, ki sta podrobneje opisani spodaj. \\
+	
+	V nadaljevanju bova s programskim jezikom Python napisala program, ki s pomočjo dinamičnega programiranja izračuna optimalno rešitev $(y^*, x^*)$ glede na naključno generirane podatke. S pomočjo primerov iz dokumenta bova preverila tudi, da program deluje pravilno. S pomočjo algoritma lahko izračunamo rešitev v primeru optimističnega primera, kot tudi pesimističnega. V najslabšem scenariju ima časovno zahtevnost $\theta(n\overline{b})$. Iz \textbf{Trditve 3} je razvidno, da je reševanje problema BKP ekvivalentno reševanju posrednikovega problema nahrbtnika za vsako celo število iz intervala $[ \underline{b}, \overline{b}]$. Algoritem v svojem teku jemlje obe ciljni funkciji. To dosežemo z dvema fazama, ki sta podrobneje opisani spodaj. \\
 
 	\textbf{Forward phase} \\
-	Prva faza je sestavljena iz dveh zank in nam na vsakem koraku zgenerira maksimalno vrednost nahrbtnika, če v njega dodamo še k-ti predmet. To naredimo za vsako kapaciteto $y$. Opomniti je treba, da funkcija  $\widetilde{f}^{1}_{k}(y)$ ne upošteva ceno prostornine nahrbtnika, in je torej   $\widetilde{f}^{1}_{k}(y) = f^{1}_{k}(y)+ty$ \\
+	Prva faza je sestavljena iz dveh zank: zunanja zanka s koraki $k \in \left[1, \dots , n \right]$ in notranja zakna vezana na celoštevilsko kapaciteto nahrbtnika $y \in \left[ \underline{b}, \overline{b} \right]$. Med to fazo sta generirani dve tabeli. Prva vsebuje optimalne vrednosti sledilca
+	$$ f^{2}_{k}(y) = max \left\{ \sum_{j=1}^{k} c_j x_j : \sum_{j=1}^{k} a_j x_j \leq y, x \in \{0, 1\}^k \right\} $$
+	
+	druga pa optimalnevrednosti investitorja
+	$$ \widetilde{f}^{1}_{k}(y) = max \left\{ \sum_{j=1}^{k} d_j x_j : x \in P(y) \right\} $$
+	
+	na vsakem koraku $k$ in za vsako kapaciteto $y$. Za graditev teh tabel z dinamicnim programiranjem se rekurzija izvede za vse vrednosti $y$ med $0$ in $\overline{b}$, za vsak predmet. Opomniti je treba, da funkcija  $\widetilde{f}^{1}_{k}(y)$ ne upošteva ceno prostornine nahrbtnika, in je torej   $\widetilde{f}^{1}_{k}(y) = f^{1}_{k}(y)+ty$. \\
 
+	\begin{figure}[ht]
+  	\centering
+  		\begin{minipage}{0.9\linewidth}
+			\begin{algorithmic}
+				\FOR{$k = 2, \dots, n$ \textbf{and} $y = 0, \dots \overline{b}$}
+   					\IF{$y < a_k$}
+						\STATE $f_{k}^{2}(y) = f_{k-1}^{2}(y)$ \textbf{and} $\widetilde{f}_{k}^{1}(y) = \widetilde{f}_{k-1}^{1}(y)$
+					\ELSE
+						\STATE $f_{k}^{2}(y) = max( f_{k-1}^{2}(y), f_{k-1}^{2}(y - a_k) + c_k)$
+						\IF{$f_{k-1}^{2}(y) \neq f_{k-1}^{2}(y - a_k) + c_k$}
+							\STATE $\widetilde{f}^{1}_{k}(y) = \widetilde{f}^{1}_{k-1}(y)$ \textbf{if} $f_{k}^{2}(y) = f_{k-1}^{2}(y)$
+							\STATE $\widetilde{f}^{1}_{k}(y) = \widetilde{f}^{1}_{k-1}(y-a_k) + d_k$ \textbf{if} $f_{k}^{2}(y) = f_{k-1}^{2}(y - a_k) + c_k$
+						\ELSE
+							\STATE $\widetilde{f}^{1}_{k}(y) = max(\widetilde{f}^{1}_{k-1}(y), \widetilde{f}^{1}_{k-1}(y-a_k) + d_k)$ (Opt.)
+							\STATE $\widetilde{f}^{1}_{k}(y) = max(\widetilde{f}^{1}_{k-1}(y), \widetilde{f}^{1}_{k-1}(y-a_k) + d_k)$ (Pes.)
+						\ENDIF
+					\ENDIF
+				\ENDFOR
+			\end{algorithmic}
+		\end{minipage}
+	\end{figure}
+	
+	V prvem koraku (tj. $k=1$) gledamo samo prvi predmet $x_1$. Optimalna rešitev investitorja in sledilca, za vsako kapaciteto y, je izračunana na sledeč način:
+	
+	\[   
+	\text{$f_{1}^{2}(y) =$}
+    	\begin{cases}
+	 	\text{0 for $y = 0, \dots, a_1 - 1$} \\
+       		\text{$c_1$ for $y = a_1, \dots, \overline{b}$} \\
+    	\end{cases}
+	\]
+	
+	\[   
+	\text{$\widetilde{f}^{1}_{1}(y) =$}
+    	\begin{cases}
+	 	\text{0 for $y = 0, \dots, a_1 - 1$} \\
+       		\text{$d_1$ for $y = a_1, \dots, \overline{b}$} \\
+    	\end{cases}
+	\]
+	
+	
 	\textbf{Backtracking phase} \\
-	Druga faza je uporabljena za iskanje optimalne rešitve $(y^*, x^*)$, ki ustreza optimalni vrednosti določeni iz prejšnje faze. Optimalna kapaciteta $y$ je generirana z n-tim stolpcem tabele investitiorja.
+	Druga faza je uporabljena za iskanje optimalne rešitve $(y^*, x^*)$, ki ustreza optimalni vrednosti določeni iz prejšnje faze. Optimalna kapaciteta $y$ je generirana z n-tim stolpcem tabele investitiorja, kot je opisano v naslednji trditvi.
+	
+	\begin{theorem}
+	Naj bo $(x^*, y^*)$ optimalna rešitev BKPd.
+	\begin{itemize}
+		\item Če je $t \leq 0$, potem $\widetilde{f}^{1}_{n}(y^*) + ty^* = Max \left\{ \widetilde{f}^{1}_{n}(y^*) + ty : y \in \{\underline{b}, \underline{b} + 1, \dots, \overline{b} \} \right\}$
+		\item Če je $t > 0$, sta možnosti dve: $(i) Max \left\{ \widetilde{f}^{1}_{n}(y) + t(y + 1) \right\} \leq \widetilde{f}^{1}_{n}(\overline{b}) + t\overline{b}$, je $( \overline{b}, x^* )$ optimalna rešitev BKP, kjer je $x^* \in P(y^*)$ in $y^* = \overline{b}$; ali $(ii)$ BKP nima optimalne rešitve.
+	\end{itemize}
+	\end{theorem}
+	
+	Iz optimalne rešitve vodje $y^*$, backtracking phase uporabi rekurzijo dinamičnega programiranja povezano z investitorjevim in sledilčevim problemom. Postopek v obliki psevdokode za to fazo je predstavljen spodaj.
 
+	\begin{figure}[ht]
+  	\centering
+  		\begin{minipage}{.5\linewidth}
+			\begin{algorithmic}
+			\STATE $y \leftarrow y^*$
+				\FOR{$f_{k-1}^{2}(y) \neq f_{k-1}^{2}(y - a_k) + c_k$}
+   					\IF{$y = 3$}
+						\IF{$f_{k}^{2}(y) = f_{k-1}^{2}(y)$}
+							\STATE $x^*_k = 0$
+						\ELSE
+							\STATE $x^*_k = 1$ \textbf{and} $y \gets y - a_k$
+						\ENDIF
+					\ELSE
+						\IF{$\widetilde{f}_{k}^{1}(y) = \widetilde{f}_{k-1}^{1}(y)$}
+							\STATE $x^*_k = 0$
+						\ELSE
+							\STATE $x^*_k = 1$ and $y \gets y - a_k$
+						\ENDIF
+					\ENDIF
+				\ENDFOR
+				\IF{$f_{1}^{2}(y) = 0$}
+					\STATE $x_1^* = 0$
+				\ELSE
+					\STATE $x_1^* = 1$
+				\ENDIF
+			\end{algorithmic}
+		\end{minipage}
+	\end{figure}
 	
+	Če se vodja sooča z enakovrednimi odločitvami, lahko spremenljivka $x^*_k$ lahko zavzame vrednost 0 ali 1. Vrednost $x^*_1$, ki ni odvisna od rekurzije, je nastavljena na 0, če je $f_{1}^{2}(y) = 0$, in 1 v nasprotnem primeru. Če $y^*$ ni enoličen, je za iskanje optimalne rešitve backtracking postopek uporabljen za vsak $y^*$.
 	
+	Python koda za opisano fazo se nahaja v datoteki $BKP.py$, funkcija $backtracking\_phase$. Vsebuje tudi komentarje za lažje raumenvanje funkcije.
 		\pagebreak
 
 
