@@ -84,3 +84,6 @@ class BKP:
         else:
             predmeti.append(1)
         return predmeti[::-1], optKapital
+
+### PRIMERI ###
+#bkp3 = BKP([5,3,2,1], [1, 1, 1, 1], [3,5,1,9], 0, 6, -2, True)
