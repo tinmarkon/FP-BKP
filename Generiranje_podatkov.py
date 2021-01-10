@@ -1,7 +1,9 @@
 import random
-from Objekt_BKP import BKP
+from time import perf_counter
+from BKP import BKP
 
 st_predmetov = [10, 25, 50, 75, 100] #V seznamu dolocis stevilo predmetov za problem
+st_ponovitev = 100 ### Kolikokrat ponovimo izracun za vsako stevilo predmetov
 
 def gen_n(n, y): #generiranje seznamov z n predmeti, y ~ max volumen
     koef1 = []
@@ -18,8 +20,16 @@ def gen_n(n, y): #generiranje seznamov z n predmeti, y ~ max volumen
         utezi_predmetov.append(k)
     return koef1, koef2, utezi_predmetov, y
 
+seznam_casov = []
 for i in st_predmetov:
-    koef1, koef2, utezi, kapital = gen_n(i, 40)
-    bkp = BKP(utezi, koef1, koef2, 0, kapital, -1, True)
-    bkp.optimalna_resitev()
-    
+    fiksni_seznam = []
+    for j in range(st_ponovitev):
+        koef1, koef2, utezi, kapital = gen_n(i, 40)
+        zacetek = perf_counter()
+        bkp = BKP(utezi, koef1, koef2, 0, kapital, -1, True)
+        bkp.optimalna_resitvev()
+        konec = perf_counter()
+        fiksni_seznam.append(konec - zacetek)
+    seznam_casov.append(fiksni_seznam)
+
+print(len(seznam_casov[0]))        
