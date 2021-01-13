@@ -38,7 +38,7 @@ class BKP:
                         sledilec[-1][j], sledilec[-1][j - self.teze[k]] + self.s_prihodek[k])
                     fiksni_sledilec.append(maksimalna_sledilec)
                     if (sledilec[-1][j] != sledilec[-1][j - self.teze[k]] + self.s_prihodek[k]):
-                        if fiksni_sledilec == sledilec[-1][j]:
+                        if maksimalna_sledilec == sledilec[-1][j]:
                             fiksni_investitor.append(investitor[-1][j])
                         else:
                             fiksni_investitor.append(
