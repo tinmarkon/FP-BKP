@@ -1,5 +1,6 @@
 class BKP:
     def __init__(self, teze, s_prihodek, i_prihodek, s_kapital, kapital, cena_enote, optimisticen):
+        """ Dodani zacetni parametri """
         self.teze = teze
         self.s_prihodek = s_prihodek
         self.i_prihodek = i_prihodek
@@ -9,6 +10,7 @@ class BKP:
         self.optimisticen = True
 
     def prvi_predmeti(self):
+        """ Metoda vraca dva seznama, kjer gledamo samo ali lahko v nahrbtnik damo prvi predmet """
         seznam_sledilec = list()
         seznam_investitor = list()
         for j in range(0, self.kapital + 1):
@@ -21,6 +23,7 @@ class BKP:
         return seznam_sledilec, seznam_investitor
 
     def generiranje_tabel(self):
+        """ Metoda vraca dva seznama, za sledilca in investitorja, za vse mozne delne vsote in po vseh kapitalih od 0 do y  (Forward phase) """
         sledilec = list()
         investitor = list()
         zacetni_predmet_s, zacetni_predmet_i = self.prvi_predmeti()
@@ -55,6 +58,7 @@ class BKP:
         return investitor, sledilec
 
     def optimalna_resitvev(self):
+        """ Metoda vraca par x* in y*, ki nam pove katere predmete damo v nahrbtnik in kak kapital je optimalen (Backtracking phase) """
         investitorjeva_matrika, sledilceva_matrika = self.generiranje_tabel()
         inv_resitev = investitorjeva_matrika[-1]
         zasluzek = 0
