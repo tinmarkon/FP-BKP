@@ -43,7 +43,7 @@ primer_3 = casovna_odvisnost(100, 100)
 primer_4 = casovna_odvisnost(150, 150)
 primer_5 = casovna_odvisnost(60, 60)
 
-y_1  = [primer_1[i][0] for i in range(len(st_predmetov))]
+y_1 = [primer_1[i][0] for i in range(len(st_predmetov))]
 y_2 = [primer_2[i][0] for i in range(len(st_predmetov))]
 y_3 = [primer_3[i][0] for i in range(len(st_predmetov))]
 y_4 = [primer_4[i][0] for i in range(len(st_predmetov))]
