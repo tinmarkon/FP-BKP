@@ -271,17 +271,58 @@ kjer so $a$, $c$ in $d$ celoštevilske vrednosti in $a$, $c$, $d$, $\underline{b
 	
 	\section{Časovna zatevnost}
 	
-	V teoriji je časovna zatevnost algoritma linearna: $\theta(n\overline{b})$. To sva preverila na naključno generiranih podatkih. Za različna števila $n$ (št. predmetov), fiksen $y$ (omejitev kapitala), fiksen $m$ (max omejitev uteži predmetov) in fiksen $t$ (cena enote kapitala), sva algoritem pognala stokrat in izračunala povprečen čas. Spodnji graf prikazuje povprečen čas, ki ga algoritem potrebuje za izračun rešitve v odvisnosti od števila predmetov. Razberemo lahko, da predpostavka o linearnosti drži. Graf z vsak $n$ z \textcolor{orange}{$\times$} prikazuje tudi varianco vektorjev koristnosti investitorja in sledilca.
+	V teoriji je časovna zatevnost algoritma linearna: $\theta(n\overline{b})$. Za različna števila $n$ (št. predmetov), $y$ (omejitev kapitala $\overline{b}$), $m$ (max omejitev uteži predmetov) in fiksen $t$ (cena enote kapitala), sva algoritem za vsak $n$ pognala 100-krat oziroma 1000-krat in izračunala povprečen čas, ki ga ta porabi za izračun rezultata. Cena kapitala je v vseh primerih negativna, $t = -1$, kar pomeni, da optimalna rešitev vedno obstaja. Pri več ponovitvah so krivulje na grafih, kot pričakovano, bolj gladke.
+	
+	Najprej sva obravnavala hitrost glede na različne omejitve kapitala $y$. Omejitev uteži predmetov $m$ je nastavljena na enako vrednost kot $y$. Rezultata na Sliki 1 in 2 nam potrdita teoretično izračunano predpostavko o časovni zahtevnosti. Vidimo, da so krivulje skoraj linearne in imajo pri večjih $n$ večji naklon.
+	
+	Sliki 3 in 4 prikazujeta varianco podatkov uporabljenih na primerih iz prejšnjega odstavka. Vidimo lahko, da je za večji $y$ ta večja, pri manjših pa zelo blizu 0.
+	
+	Ker omejitev uteži predmetov $m$ na časovno zatevnost po predpostavki ne vplivajo, sva to tudi preverila. Algoritem je bil testiran na različnih $m$, ki so bili izbrani glede na fiksno omejitev kapitala $y=40$. Izbrani $m$ je manjši, večji in enak omejitvi kapitala. Sliki 5 in 6 nam pokažeta, da spreminjanje tega parametra ne igra vloge pri času izvajanja algoritma, saj so si vse tri krivulje med seboj zelo podobne. Odstopanje krivulje $m=40$ si lako pojasnimo z večjo varianco podatkov uporabljenih za izračun, glej Sliko 3 in 4.
+	
 	\begin{figure}[h]
     	\centering
-    		\includegraphics[scale=0.3]{BKP_casovna_zahtevnost.png}
-    		\caption{Časovna zatevnost}
-    		\label{fig:graf1}
+    		\includegraphics[scale=0.35]{Graf_1_100.png}
+    		\caption{Odvisnost od $y$, 100 pon.}
+    		\label{fig:graf1_100}
 	\end{figure}
 	
-		\pagebreak
-
-
+	\begin{figure}[h]
+    	\centering
+    		\includegraphics[scale=0.35]{Graf_1_1000.png}
+    		\caption{Odvisnost od $y$, 1000 pon.}
+    		\label{fig:graf1_1000}
+	\end{figure}
+	
+	\begin{figure}[h]
+    	\centering
+    		\includegraphics[scale=0.35]{Graf_2_100.png}
+    		\caption{Varianca podatkov, 100 pon.}
+    		\label{fig:graf3_100}
+	\end{figure}
+	
+	\begin{figure}[h]
+    	\centering
+    		\includegraphics[scale=0.35]{Graf_2_1000.png}
+    		\caption{Varianca podatkov, 1000 pon.}
+    		\label{fig:graf4_1000}
+	\end{figure}
+	
+	
+	\begin{figure}[h]
+    	\centering
+    		\includegraphics[scale=0.35]{Graf_3_100.png}
+    		\caption{Odvisnost od $m$, 100 pon.}
+    		\label{fig:graf5_100}
+	\end{figure}
+	
+	\begin{figure}[h]
+    	\centering
+    		\includegraphics[scale=0.35]{Graf_3_1000.png}
+    		\caption{Odvisnost od $m$, 1000 pon.}
+    		\label{fig:graf6_1000}
+	\end{figure}
+	
+		\clearpage
 		
 % VIRI	
 		\begin{thebibliography}{9}
