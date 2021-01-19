@@ -235,8 +235,8 @@ kjer so $a$, $c$ in $d$ celoštevilske vrednosti in $a$, $c$, $d$, $\underline{b
   		\begin{minipage}{.55\linewidth}
 			\begin{algorithmic}[1]
 			\STATE $y \leftarrow y^*$
-				\FOR{$f_{k-1}^{2}(y) \neq f_{k-1}^{2}(y - a_k) + c_k$}
-   					\IF{$y = 3$}
+				\FOR{$k = n$ to $2$ }
+   					\IF{$f_{k-1}^{2}(y) \neq f_{k-1}^{2}(y - a_k) + c_k$}
 						\IF{$f_{k}^{2}(y) = f_{k-1}^{2}(y)$}
 							\STATE $x^*_k = 0$
 						\ELSE
