@@ -187,7 +187,7 @@ kjer so $a$, $c$ in $d$ celoštevilske vrednosti in $a$, $c$, $d$, $\underline{b
 							\STATE $\widetilde{f}^{1}_{k}(y) = \widetilde{f}^{1}_{k-1}(y-a_k) + d_k$ \textbf{if} $f_{k}^{2}(y) = f_{k-1}^{2}(y - a_k) + c_k$
 						\ELSE
 							\STATE $\widetilde{f}^{1}_{k}(y) = max(\widetilde{f}^{1}_{k-1}(y), \widetilde{f}^{1}_{k-1}(y-a_k) + d_k)$ (Opt.)
-							\STATE $\widetilde{f}^{1}_{k}(y) = max(\widetilde{f}^{1}_{k-1}(y), \widetilde{f}^{1}_{k-1}(y-a_k) + d_k)$ (Pes.)
+							\STATE $\widetilde{f}^{1}_{k}(y) = min(\widetilde{f}^{1}_{k-1}(y), \widetilde{f}^{1}_{k-1}(y-a_k) + d_k)$ (Pes.)
 						\ENDIF
 					\ENDIF
 				\ENDFOR
